@@ -1,0 +1,97 @@
+// This is your Prisma schema file
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// To speed up queries and scale with serverless or edge functions, try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstName  String?   @default("")
+  lastName   String?   @default("")
+  email      String    @unique
+  clerkid    String    @unique
+  bots       ChatBot[]
+  profile    Profile?
+  onboarding Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  profilePic String?
+}
+
+model Profile {
+  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  gender   String
+  interest String[]
+  emotions Int
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String   @unique @db.Uuid
+}
+
+model ChatBot {
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String?      @default("Virtual Friend")
+  personality Personality?
+  user        User         @relation(fields: [userId], references: [id])
+  userId      String       @db.Uuid
+  messages    Message[]
+  avatars     Avatars?     @relation(fields: [avatarsId], references: [id])
+  avatarsId   String?      @db.Uuid
+}
+
+model Personality {
+  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tone               Tone               @default(CASUAL)
+  communicationStyle CommunicationStyle @default(CONCISE)
+  intelligenceLevel  IntelligenceLevel  @default(SIMPLE)
+  politenessLevel    PolitenessLevel    @default(NEUTRAL)
+  ChatBot            ChatBot            @relation(fields: [chatBotId], references: [id])
+  chatBotId          String             @unique @db.Uuid
+}
+
+model Message {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  text        String?
+  chat        ChatBot  @relation(fields: [chatBotId], references: [id])
+  chatBotId   String   @db.Uuid
+  isUserInput Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  liked       Boolean  @default(false)
+}
+
+model Avatars {
+  id       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  imageUrl String    @unique
+  category String?
+  chatBots ChatBot[]
+}
+
+enum Tone {
+  CASUAL
+  FORMAL
+  HUMOROUS
+}
+
+enum CommunicationStyle {
+  CONCISE
+  DETAILED
+}
+
+enum IntelligenceLevel {
+  SIMPLE
+  MODERATE
+  ADVANCED
+}
+
+enum PolitenessLevel {
+  NEUTRAL
+  POLITE
+  HARSH
+}
