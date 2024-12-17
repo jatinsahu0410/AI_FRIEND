@@ -1,9 +1,9 @@
 import { client } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export const GET = async (request: Request, { params }: { params: Record<string, string> }) => {
+export const GET = async (request: Request, { params }: { params: Promise<{ chatId: string }> }) => {
     try {
-        const { chatId } = params;
+        const { chatId } = await params;
 
         if (!chatId) {
             return NextResponse.json(
