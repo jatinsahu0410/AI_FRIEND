@@ -1,4 +1,3 @@
-// app/auth/callback/page.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -8,7 +7,7 @@ import { onAuthenticateUser } from '@/app/actions/user'
 import AuthLoading from './loading'
 
 const AuthCallBackPage = () => {
-    const router = useRouter()
+    const router = useRouter()  
     const { user } = useClerk()
     const [isLoading, setIsLoading] = useState(true)  // State for loading
 

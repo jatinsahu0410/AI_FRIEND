@@ -98,7 +98,7 @@ const Navbar = () => {
                             <Link href="/dashboard">
                                 <Image src={`${curruser?.profilePic !== null ? curruser?.profilePic : `https://api.dicebear.com/5.x/initials/svg?seed=${curruser.firstName}%20${curruser.lastName}`}`}
                                     alt={curruser?.lastName}
-                                    className="w-11 h-11 rounded-full object-cover shadow-md "
+                                    className="w-11 h-11 rounded-full object-cover"
                                     width={28}
                                     height={28}
                                 />  
