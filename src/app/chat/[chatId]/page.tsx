@@ -11,7 +11,7 @@ import { useUser } from '@clerk/nextjs';
 
 const ChatPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { chatId } = useParams();
+    const { chatId } = useParams() as { chatId: string };
     const dispatch = useDispatch();
     const { isSignedIn, user } = useUser();
     const [loading, setLoading] = useState(true);

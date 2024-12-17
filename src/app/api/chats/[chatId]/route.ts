@@ -1,11 +1,7 @@
 import { client } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-interface RouteParams {
-    params: { chatId?: string };
-}
-
-export const GET = async (request: Request, { params }: RouteParams) => {
+export const GET = async (request: Request, { params }: { params: { chatId?: string } }) => {
     try {
         const { chatId } = params;
 
