@@ -20,7 +20,7 @@ const ChatPage: React.FC = () => {
             if (isSignedIn && user) {
                 try {
                     const res = await fetch(`/api/chats/${chatId}`, {
-                        method: 'POST',
+                        method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
                         },

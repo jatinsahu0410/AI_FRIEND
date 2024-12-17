@@ -1,18 +1,15 @@
 import { client } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-interface Params {
-    params: {
-        chatId?: string; // Optional since chatId might not exist
-    };
+interface RouteParams {
+    params: { chatId?: string };
 }
 
-export const POST = async (_: Request, context: Params) => {
+export const GET = async (request: Request, { params }: RouteParams) => {
     try {
-        // Extract `params` dynamically
-        const { params } = context;
+        const { chatId } = params;
 
-        if (!params?.chatId) {
+        if (!chatId) {
             return NextResponse.json(
                 { message: "Bad Request", status: 404 },
                 { status: 404 }
@@ -21,7 +18,7 @@ export const POST = async (_: Request, context: Params) => {
 
         const botDetails = await client.chatBot.findUnique({
             where: {
-                id: params.chatId,
+                id: chatId,
             },
             include: {
                 personality: true,

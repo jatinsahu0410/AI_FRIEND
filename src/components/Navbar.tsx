@@ -95,7 +95,7 @@ const Navbar = () => {
                 <div className="flex items-center space-x-4">
                     {isSignedIn && user && curruser !== undefined ? (
                         <>
-                            <Link href="/dashboard">
+                            <Link href="/dashboard/chatbots">
                                 <Image src={`${curruser?.profilePic !== null ? curruser?.profilePic : `https://api.dicebear.com/5.x/initials/svg?seed=${curruser.firstName}%20${curruser.lastName}`}`}
                                     alt={curruser?.lastName}
                                     className="w-11 h-11 rounded-full object-cover"
