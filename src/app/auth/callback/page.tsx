@@ -12,6 +12,7 @@ const AuthCallBackPage = () => {
     const [isLoading, setIsLoading] = useState(true)  // State for loading
 
     useEffect(() => {
+        console.log("The authentication : ");
         const authenticateUser = async () => {
             if (user) {
                 const auth = await onAuthenticateUser();
